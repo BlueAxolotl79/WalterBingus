@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>heh funny boi</title>
+</head>
+<body>
+    <form id="webhookForm">
+        <input type="text" id="messageInput" placeholder="Type your message...">
+        <button type="submit">Send</button>
+    </form>
+
+    <script>
+        document.getElementById("webhookForm").addEventListener("submit", function (event) {
+            event.preventDefault(); // Prevent form submission
+            const message = document.getElementById("messageInput").value;
+            sendWebhookMessage(message);
+        });
+
+        function sendWebhookMessage(message) {
+            // Replace with your actual Pumble webhook URL
+            const webhookUrl = "https://api.pumble.com/workspaces/66d6fbb2be947e2c266b93d9/incomingWebhooks/postMessage/AjM1gZthHXW7d1SBMjdkzy5W";
+
+            // Create an HTTP request
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", webhookUrl);
+            xhr.setRequestHeader("Content-Type", "application/json");
+
+            // Construct the payload
+            const payload = {
+                text: message
+            };
+
+            // Convert payload to JSON and send
+            xhr.send(JSON.stringify(payload));
+
+            // Handle success or error (you can customize this part)
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    console.log("Webhook sent successfully!");
+                } else {
+                    console.error("Error sending webhook:", xhr.statusText);
+                }
+            };
+        }
+    </script>
+</body>
+</html>
